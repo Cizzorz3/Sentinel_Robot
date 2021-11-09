@@ -1,0 +1,46 @@
+import tkinter as tk
+from tkinter import ttk
+from tkinter import messagebox
+from PIL import Image , ImageTk
+class First_page(tk.Frame):
+    def __init__(self,parent,controller):
+        tk.Frame. __init__(self,parent)
+        Label=tk.Label(self,text="Language Selection",font=("Arial Bold",30))
+
+        Label.place(x=290,y=230)
+        
+
+        Button=tk.Button(self,text="Next" , font=("Arial",15),command=lambda: controller.show_frame(second_page))
+        Button.place(x=650,y=450)
+class second_page(tk.Frame):
+    def __init__(self,parent,controller):
+        tk.Frame.__init__(self,parent)
+        Label=tk.Label(self,text="Language Selection",font=("Arial Bold",30))
+        Label.place(x=230,y=230)
+        Button=tk.Button(self,text="Back" , font=("Arial",15),command=lambda: controller.show_frame(First_page))
+        Button.place(x=650,y=450)
+
+class Application(tk.Tk):
+    def __init__(self,*args,**kwargs):
+        tk.Tk.__init__(self,*args,**kwargs)
+
+        window=tk.Frame(self)
+        window.pack()
+        window.grid_rowconfigure(0,minsize=500)
+        window.grid_columnconfigure(0,minsize=800)
+
+        self.frames={}
+        for F in (First_page,second_page):
+            frame=F(window,self)
+            self.frames[F]=frame
+            frame.grid(row=0,column=0,sticky="nsew")
+        self.show_frame(First_page)
+
+    def show_frame(self,page):
+            frame=self.frames[page]
+            frame.tkraise()
+app=Application()
+app.config(background="00A7E6")
+app.mainloop()
+
+
